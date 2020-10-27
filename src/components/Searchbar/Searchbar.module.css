@@ -1,0 +1,20 @@
+.searchBar {
+  background-color: rgb(44, 87, 218);
+  height: 8vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.searchFormBtn {
+  background-color: #fff;
+  border: none;
+  height: 26px;
+outline: none;
+}
+
+.searchFormInput{
+    height: 24px;
+    width: 30vw;
+    border: none;
+    outline: none;
+}
