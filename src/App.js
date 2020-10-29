@@ -16,9 +16,6 @@ class App extends React.Component {
     largeImageURL: "",
   };
 
-  componentDidMount() {
-    this.setState({ isLoading: true });
-  }
 
   componentDidUpdate(prevProps, prevState) {
     const prevQuery = prevState.searchQuery;
