@@ -4,8 +4,8 @@ import axios from "axios";
 import Searchbar from "./components/Searchbar/Searchbar";
 import ImageGallery from "./components/ImageGallery/ImageGallery";
 import Button from "./components/Button/Button";
-import Loader from "react-loader-spinner";
-import Modal from './components/Modal/Modal'
+import Modal from "./components/Modal/Modal";
+import Loader from "./components/Loader/Loader";
 class App extends React.Component {
   state = {
     images: [],
@@ -13,8 +13,8 @@ class App extends React.Component {
     searchQuery: "",
     page: 1,
     showModal: false,
+    largeImageURL: "",
   };
-  
 
   componentDidMount() {
     this.setState({ isLoading: true });
@@ -25,13 +25,12 @@ class App extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     const prevQuery = prevState.searchQuery;
     const nextQuery = this.state.searchQuery;
-
     if (prevQuery !== nextQuery) {
       this.handleSubmit();
     }
   }
   handleSubmit = () => {
-    this.setState({isLoading: true})
+    this.setState({ isLoading: true });
     axios
       .get(
         `https://pixabay.com/api/?q=${this.state.searchQuery}&page=${this.state.page}&key=18865973-5d109a1ffb14de9c0f29f81a5&image_type=photo&orientation=horizontal&per_page=12`
@@ -46,38 +45,41 @@ class App extends React.Component {
         });
         window.scrollTo({
           top: document.documentElement.scrollHeight,
-          behavior: 'smooth',
+          behavior: "smooth",
         });
       });
   };
   handleSearchFormSubmit = (query) => {
     this.setState({ searchQuery: query, page: 1, images: [] });
   };
-  toggleModal=(e)=>{
-this.setState(prevState=>{
- return{
-   showModal: !prevState.showModal,
- }
-})
-  }
+
+  toggleModal = () => {
+    this.setState((prevState) => {
+      return {
+        showModal: !prevState.showModal,
+      };
+    });
+  };
+  openModal = (largeImageURL) => {
+    this.setState({ largeImageURL: largeImageURL });
+    this.toggleModal();
+  };
 
   render() {
-    const { images, isLoading, showModal } = this.state;
+    const { images, isLoading, showModal, largeImageURL } = this.state;
     return (
       <div>
         <Searchbar submit={this.handleSearchFormSubmit} />
-        {images.length > 0 && <ImageGallery onClick={this.toggleModal} articles={images} />}
-        {showModal && <Modal onClose={this.toggleModal}></Modal>}
-        {isLoading && (
-          <Loader
-            className="Loader"
-            type="Audio"
-            color="#00BFFF"
-            height={100}
-            width={100}
-            timeout={3000} //3 secs
-          />
+        {images.length > 0 && (
+          <ImageGallery onClick={this.openModal} images={images} />
         )}
+        {showModal && (
+          <Modal
+            largeImageURL={largeImageURL}
+            onClose={this.toggleModal}
+          ></Modal>
+        )}
+        {isLoading && <Loader />}
         {images.length > 0 && !isLoading && (
           <Button loadMore={this.handleSubmit} />
         )}

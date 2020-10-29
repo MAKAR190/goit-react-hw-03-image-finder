@@ -9,12 +9,12 @@
   background-color: #fff;
   border: none;
   height: 26px;
-outline: none;
+  outline: none;
 }
 
-.searchFormInput{
-    height: 24px;
-    width: 30vw;
-    border: none;
-    outline: none;
+.searchFormInput {
+  height: 24px;
+  width: 30vw;
+  border: none;
+  outline: none;
 }
