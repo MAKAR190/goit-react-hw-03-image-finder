@@ -28,7 +28,7 @@ class App extends React.Component {
     this.setState({ isLoading: true });
     axios
       .get(
-        `https://pixabay.com/api/?q=${this.state.searchQuery}&page=${this.state.page}&key=18865973-5d109a1ffb14de9c0f29f81a5&image_type=photo&orientation=horizontal&per_page=12`
+        `https://pixabay.com/api/?q=${this.state.searchQuery}&page=${this.state.page}&key=18865973-5d109a1ffb14de9c0f29f81a5&image_type=photo&orientation=horizontal&per_page=15`
       )
       .then((response) => {
         this.setState((prevState) => {
