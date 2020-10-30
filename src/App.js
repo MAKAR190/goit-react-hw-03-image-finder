@@ -12,10 +12,10 @@ class App extends React.Component {
     isLoading: false,
     searchQuery: "",
     page: 1,
+    total: 0,
     showModal: false,
     largeImageURL: "",
   };
-
 
   componentDidUpdate(prevProps, prevState) {
     const prevQuery = prevState.searchQuery;
@@ -36,6 +36,7 @@ class App extends React.Component {
             images: [...prevState.images, ...response.data.hits],
             isLoading: false,
             page: prevState.page + 1,
+            total: response.data.total,
           };
         });
         window.scrollTo({
@@ -61,7 +62,7 @@ class App extends React.Component {
   };
 
   render() {
-    const { images, isLoading, showModal, largeImageURL } = this.state;
+    const { images, isLoading, showModal, largeImageURL, total } = this.state;
     return (
       <div>
         <Searchbar submit={this.handleSearchFormSubmit} />
@@ -75,7 +76,7 @@ class App extends React.Component {
           ></Modal>
         )}
         {isLoading && <Loader />}
-        {images.length > 0 && !isLoading && (
+        {images.length > 0 && !isLoading && total !== images.length && (
           <Button loadMore={this.handleSubmit} />
         )}
       </div>
